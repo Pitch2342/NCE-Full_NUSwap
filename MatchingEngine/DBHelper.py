@@ -8,7 +8,7 @@ from decimal import Decimal
 import sqlalchemy
 import pandas as pd
 import datetime
-# from dotenv import dotenv_values
+from dotenv import dotenv_values
 
 # # DB Creator
 
@@ -27,15 +27,8 @@ import datetime
 
 
 class DBHelper:
-    # url = dotenv_values(".env")["url"]
-    user = 'nus'
-    password = '12345678'
-    host = 'localhost'
-    port = 5432
-    database = 'nustesting'
-    url = "postgresql+psycopg2://{0}:{1}@{2}:{3}/{4}".format(user, password, host, port, database)
+    url = dotenv_values(".env")["url"]
     engine = sqlalchemy.create_engine(url, echo=False)
-    # engine = sqlalchemy.create_engine(url, echo=False)
     con = engine.connect()
     GLOBAL_TABLES_CREATION_SCRIPT = "CREATE_GLOBAL_TABLES.txt"
     old_time = {}
