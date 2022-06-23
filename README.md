@@ -36,10 +36,46 @@ npm install
 ```
 3. Open PostgreServer and set your own PostgreSQL credentials
 # Live Run
-## Step 1 - Open 4 terminals
 
-## Step 2 - Terminal number 1
+## Step 0 - Run Docker
+```
+docker run --rm -it --name mq -d -p 5672:5672 -p 15672:15672 -dit rabbitmq
+```
+### Step 1 - Open 4 terminals
 
+### Terminal number 1
+1. Open Backend Folder
+2. Run 
+```
+npm start
+```
+## Terminal number 2
+1. Open Frontend Folder
+2. Run 
+```
+npm start
+```
+
+### Terminal number 3
+1. Open Matching Engine
+2. Run 
+```
+python init.database.py
+```
+3. Run
+```
+python init.orderbook.py
+```
+
+### Terminal 4
+1. Open Matching Engine
+2. Run 
+```
+python main.py
+```
+
+## Step 2
+Go to Localhost 3000 and use the website
 
 
 
