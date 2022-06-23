@@ -1,0 +1,33 @@
+{
+  "name": "api-2",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cdm-logger/server": "^7.0.12",
+    "@graphql-tools/schema": "^8.3.13",
+    "amqplib": "^0.10.0",
+    "apollo-server": "^3.8.2",
+    "apollo-server-core": "^3.8.2",
+    "apollo-server-express": "^3.8.2",
+    "express": "^4.18.1",
+    "graphql": "^15.0.0",
+    "graphql-modules": "^2.0.0",
+    "graphql-rabbitmq-subscriptions": "^1.1.0",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.8.2",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3",
+    "ws": "^8.7.0"
+  }
+}

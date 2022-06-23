@@ -1,0 +1,1 @@
+export const CHART_TYPES = ['Candlestick', 'Line']

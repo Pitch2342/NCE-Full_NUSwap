@@ -1,0 +1,8 @@
+.navbar-link {
+	transition: all 0.1s linear;
+	cursor: pointer;
+}
+
+.navbar-link:hover {
+	background-color: #eee;
+}
