@@ -1,0 +1,345 @@
+-- GLOBAL TABLES
+
+CREATE TABLE USERS
+( 
+USERID 		SERIAL 		NOT NULL,
+NAME 		VARCHAR(64) 	NOT NULL,
+EMAIL  		VARCHAR(64) 	NOT NULL,
+PASSWORD  	VARCHAR(64) 	NOT NULL,
+PHONE  		VARCHAR(64),
+BALANCE 	DECIMAL(15,5) 	NOT NULL 	DEFAULT 0,
+PRIMARY KEY(USERID)
+);
+
+CREATE TABLE WALLET
+( 
+WALLETID  	SERIAL 		NOT NULL,
+OWNER  		INTEGER 	NOT NULL,
+PRIMARY KEY(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)
+);
+
+CREATE TABLE SYMBOL
+( 
+SYMBOL VARCHAR(64) NOT NULL,
+PRIMARY KEY(SYMBOL)
+);
+
+CREATE TABLE WALLET_ASSETS
+( 
+WALLETID  	INTEGER  	NOT NULL,
+SYMBOL  	VARCHAR(64) 	NOT NULL,
+AMOUNT 		DECIMAL(15,5) 	NOT NULL 	DEFAULT 0,
+PRIMARY KEY(WALLETID, SYMBOL),
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (SYMBOL) REFERENCES SYMBOL(SYMBOL)
+);
+
+--BTCUSD TABLES
+CREATE TABLE OPEN_ASK_ORDERS_BTCUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+CREATE TABLE OPEN_BID_ORDERS_BTCUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                    
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+
+CREATE TABLE CLOSED_ORDERS_BTCUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+BUYSIDE  	VARCHAR(64) 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+FILLPRICE 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+FILLEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),                                
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                                
+);
+
+CREATE TABLE ORDER_FILLINGS_BTCUSD
+(                                     
+MATCHID 	SERIAL 				NOT NULL,
+BUYORDERID  	VARCHAR(64),                                    
+SELLORDERID  	VARCHAR(64),                                    
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                    
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                    
+TIME  		timestamp without time zone 	NOT NULL,
+PRIMARY KEY(MATCHID)                                   
+);
+
+CREATE TABLE MARKET_HISTORY_BTCUSD
+(                                     
+TIME  		timestamp without time zone 	NOT NULL,                                    
+OPEN 		DECIMAL(15,5) 			NOT NULL,                                    
+CLOSE 		DECIMAL(15,5) 			NOT NULL,                                    
+HIGH 		DECIMAL(15,5) 			NOT NULL,                                    
+LOW 		DECIMAL(15,5) 			NOT NULL,                                    
+VOLUME 		DECIMAL(15,5) 			NOT NULL,                                    
+VWAP 		DECIMAL(15,5) 			,                                    
+NUM_TRADES 	INTEGER 			,                   
+PRIMARY KEY(TIME)                                    
+);
+
+--ETHUSD TABLES
+CREATE TABLE OPEN_ASK_ORDERS_ETHUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+CREATE TABLE OPEN_BID_ORDERS_ETHUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                    
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+
+CREATE TABLE CLOSED_ORDERS_ETHUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+BUYSIDE  	VARCHAR(64) 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+FILLPRICE 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+FILLEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),                                
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                                
+);
+
+CREATE TABLE ORDER_FILLINGS_ETHUSD
+(                                     
+MATCHID 	SERIAL 				NOT NULL,
+BUYORDERID  	VARCHAR(64),                                    
+SELLORDERID  	VARCHAR(64),                                    
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                    
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                    
+TIME  		timestamp without time zone 	NOT NULL,
+PRIMARY KEY(MATCHID)                                   
+);
+
+CREATE TABLE MARKET_HISTORY_ETHUSD
+(                                     
+TIME  		timestamp without time zone 	NOT NULL,                                    
+OPEN 		DECIMAL(15,5) 			NOT NULL,                                    
+CLOSE 		DECIMAL(15,5) 			NOT NULL,                                    
+HIGH 		DECIMAL(15,5) 			NOT NULL,                                    
+LOW 		DECIMAL(15,5) 			NOT NULL,                                    
+VOLUME 		DECIMAL(15,5) 			NOT NULL,                                    
+VWAP 		DECIMAL(15,5) 			,                                    
+NUM_TRADES 	INTEGER 			,                   
+PRIMARY KEY(TIME)                                          
+);
+
+--XRPUSD
+CREATE TABLE OPEN_ASK_ORDERS_XRPUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+CREATE TABLE OPEN_BID_ORDERS_XRPUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+OPENQUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+UPDATEDAT  	timestamp without time zone 	NOT NULL,                                    
+PRIMARY KEY(ORDERID),                                
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                               
+);
+
+
+CREATE TABLE CLOSED_ORDERS_XRPUSD
+(                                 
+ORDERID  	VARCHAR(64) 			NOT NULL,                                
+WALLETID  	INTEGER 			NOT NULL,                                
+OWNER  		INTEGER 			NOT NULL,                                
+BUYSIDE  	VARCHAR(64) 			NOT NULL,                                
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                
+FILLCOST 	DECIMAL(15,5) 			NOT NULL,                                
+FILLPRICE 	DECIMAL(15,5) 			NOT NULL,                                
+CREATEDAT  	timestamp without time zone 	NOT NULL,                                
+FILLEDAT  	timestamp without time zone 	NOT NULL,                                
+PRIMARY KEY(ORDERID),
+FOREIGN KEY (WALLETID) REFERENCES WALLET(WALLETID),                                
+FOREIGN KEY (OWNER) REFERENCES USERS(USERID)                                
+);
+
+CREATE TABLE ORDER_FILLINGS_XRPUSD
+(                                     
+MATCHID 	SERIAL 				NOT NULL,
+BUYORDERID  	VARCHAR(64),                                    
+SELLORDERID  	VARCHAR(64),                                    
+SYMBOL  	VARCHAR(64) 			NOT NULL,
+PRICE 		DECIMAL(15,5) 			NOT NULL,                                    
+QUANTITY 	DECIMAL(15,5) 			NOT NULL,                                    
+TIME  		timestamp without time zone 	NOT NULL,
+PRIMARY KEY(MATCHID)                                   
+);
+
+CREATE TABLE MARKET_HISTORY_XRPUSD
+(                                     
+TIME  		timestamp without time zone 	NOT NULL,                                    
+OPEN 		DECIMAL(15,5) 			NOT NULL,                                    
+CLOSE 		DECIMAL(15,5) 			NOT NULL,                                    
+HIGH 		DECIMAL(15,5) 			NOT NULL,                                    
+LOW 		DECIMAL(15,5) 			NOT NULL,                                    
+VOLUME 		DECIMAL(15,5) 			NOT NULL,                                    
+VWAP 		DECIMAL(15,5) 			,                                    
+NUM_TRADES 	INTEGER 			,                   
+PRIMARY KEY(TIME)                                         
+);
+
+
+--INSERTION BEGINS
+-- 3 USERS ALICE, BOB, CAROL
+INSERT INTO USERS(NAME, EMAIL, PASSWORD, PHONE, BALANCE)
+VALUES('alice','alice@gmail.com','alice','99551100',100000);
+
+INSERT INTO USERS(NAME, EMAIL, PASSWORD, PHONE, BALANCE)
+VALUES('bob','bob@gmail.com','bob','88552200',500000);
+
+INSERT INTO USERS(NAME, EMAIL, PASSWORD, PHONE, BALANCE)
+VALUES('carol','carol@gmail.com','carol','77553300',300000);
+
+-- 1 WALLET FOR EACH USER
+INSERT INTO WALLET(OWNER) VALUES(1);
+INSERT INTO WALLET(OWNER) VALUES(2);
+INSERT INTO WALLET(OWNER) VALUES(3);
+
+-- 3 SYMBOLS< ETHUSD, BTCUSD, XRPUSD
+INSERT INTO SYMBOL(SYMBOL) VALUES('btcusd');
+INSERT INTO SYMBOL(SYMBOL) VALUES('ethusd');
+INSERT INTO SYMBOL(SYMBOL) VALUES('xrpusd');
+
+-- DIFF BTC BALANCE FOR EACH USER
+INSERT INTO WALLET_ASSETS(WALLETID, SYMBOL, AMOUNT)
+VALUES(1,'btcusd',25);
+
+INSERT INTO WALLET_ASSETS(WALLETID, SYMBOL, AMOUNT)
+VALUES(2,'btcusd',50);
+
+INSERT INTO WALLET_ASSETS(WALLETID, SYMBOL, AMOUNT)
+VALUES(3,'btcusd',100);
+
+-- ORDER PLACING STUFF - BTCUSD
+-- ALICE = BID ORDERS 	= 1 btcusd at each (total 6)	= 100, 90, 80, 70, 60, 50 usd
+-- BOB 	 = ASK ORDER 	= 1 btcusd 			= 100 usd
+-- CAROL = ASK ORDERS 	= 1 btcusd at each (total 5)	= 110, 120, 130, 140, 150 usd
+-- must match bob 100 and alice 100
+-- remaining 10 for order book
+-- WILL FILL ASK, BID. 1 ORDER FILLING AND 1 CLOSED ORDER.
+
+-- MARKET HISTORY STUFF
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '11 minute', 10, 40, 50, 10, 5, 35, 5);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '9 minute', 40, 30, 40, 30, 5, 35, 2);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '8 minute', 30, 25, 45, 20, 5, 30, 5);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '7 minute', 25, 50, 50, 25, 5, 40, 2);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '6 minute', 50, 60, 62, 48, 5, 55, 5);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '5 minute', 60, 70, 70, 60, 5, 67, 2);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '4 minute', 70, 80, 80, 60, 5, 71, 5);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '3 minute', 80, 40, 80, 40, 5, 70, 2);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '2 minute', 40, 90, 110, 40, 5, 92, 5);
+
+INSERT INTO MARKET_HISTORY_BTCUSD(TIME, OPEN, CLOSE, HIGH, LOW, VOLUME, VWAP, NUM_TRADES)
+VALUES(date_trunc('minute'::text, now()) - INTERVAL '1 minute', 90, 100, 100, 90, 5, 96, 2);
+
