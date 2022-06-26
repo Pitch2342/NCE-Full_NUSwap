@@ -19,18 +19,13 @@ export class ExchangeTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.arr && this.props.arr.slice(0, 4).map((item, index) => (
-            <tr key={index}>
+          {this.props.arr && this.props.arr.slice(0, 5).map((item, index) => (
+            <tr key={index} >
               <td> {Math.round(Number(item[1]) * 1000) / 1000} </td>
               <td style={{ color: this.props.color }}> {item[0]} </td>
-              {/* <td>
-                {
-                  this.props.arr.slice(0, index + 1).map((item) => item[1]).reduce((x, y) => Math.round((Number(x) * Number(y)) * 1000) / 1000, 0)
-                }
-              </td> */}
               <td>
                 {
-                  Math.round(Number(item[1])*Number(item[0]) * 1000) / 1000
+                  Math.round(Number(item[1]) * Number(item[0]) * 1000) / 1000
                 }
               </td>
             </tr>
