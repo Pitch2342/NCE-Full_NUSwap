@@ -7,6 +7,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import express from "express";
+import cors from "cors";
 import { AmqpPubSub } from 'graphql-rabbitmq-subscriptions';
 import { ConsoleLogger } from "@cdm-logger/server";
 
@@ -38,6 +39,7 @@ export const pubsub = new AmqpPubSub({
 
 const startApolloServer = async () => {
 	const app = express()
+	app.use(cors())
 	const httpServer = createServer(app)
 	const wsServer = new WebSocketServer({
 		server: httpServer,

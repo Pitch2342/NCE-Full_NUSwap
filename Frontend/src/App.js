@@ -18,7 +18,7 @@ export default function App() {
   const logout = () => {
     setUser(undefined)
     localStorage.removeItem(AUTH_TOKEN)
-    window.location.reload()
+    window.location.replace("/")
   }
 
   const props = {
